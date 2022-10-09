@@ -1,4 +1,4 @@
-import Joi from 'joi'
+import Joi from "joi";
 
 export const meetupValidation = (data) => {
     const schema = Joi.object({
@@ -6,8 +6,8 @@ export const meetupValidation = (data) => {
         description: Joi.string(),
         keywords: Joi.array().optional(),
         date: Joi.date().required(),
-        location: Joi.string().required()
-    })
-    
+        location: Joi.string().required(),
+    });
+
     return schema.validate(data);
-}
+};

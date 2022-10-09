@@ -7,7 +7,7 @@ import {
 } from "../services/meetup.services.js";
 
 const getAllMeetups = async (req, res, next) => {
-    const meetups = await getAll();
+    const meetups = await getAll(req.query);
     res.json(meetups);
 };
 
@@ -36,7 +36,6 @@ const deleteMeetup = async (req, res, next) => {
 
 const changeMeetup = async (req, res, next) => {
     const meetup = await update(req.params.id, req.body);
-    console.log(meetup);
     if (meetup.rowCount) {
         res.json(meetup.rows);
     } else {

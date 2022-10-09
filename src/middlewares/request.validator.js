@@ -1,8 +1,18 @@
-import { meetupValidation } from '../validations/meetup.validation.js'
+import { meetupValidation } from "../validations/meetup.validation.js";
+import { queryValidation } from "../validations/query.validation.js";
 
 class RequestValidator {
     meetup(req, res, next) {
         const { error } = meetupValidation(req.body);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        } else {
+            next();
+        }
+    }
+
+    query(req, res, next) {
+        const { error } = queryValidation(req.query);
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
         } else {

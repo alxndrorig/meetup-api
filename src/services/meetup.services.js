@@ -1,8 +1,26 @@
 import { dbConnection } from "../config/connection.js";
+import { MeetupDTO } from "../dto/meetup.dto.js"
+import { queryValidation } from "../validations/query.validation.js";
 
-async function getAll() {
+async function getAll(query) {
+    const filters = [];
+    
+    query.title ? filters.push(`title LIKE '%${query.title}%'`) : null;
+    query.description ? filters.push(`description LIKE '%${query.description}%'`) : null;
+    query.keywords ? filters.push(`(keywords && '\{${query.keywords}\}')`) : null;
+    query.date ? filters.push(`date = '${query.date}'`) : null;
+    query.location ? filters.push(`location LIKE '%${query.location}%'`) : null;
+
+    let sqlRequest = 'SELECT * FROM meetups';
+
+    sqlRequest += filters.length > 0 ? ` WHERE ${filters.join(' AND ')}` : '';
+    sqlRequest += query.sort ? ` ORDER BY ${query.sort} DESC` : '';
+    sqlRequest += query.page ? ` LIMIT ${query.page * 10}` : '';
+    
+
     try {
-        return await dbConnection.any('SELECT * FROM meetups');
+        const meetups = await dbConnection.any(sqlRequest);
+        return meetups.map(meetup => new MeetupDTO(meetup))
     } catch(error) {
         throw error;
     }
@@ -29,8 +47,7 @@ async function create({title, description, keywords, date, location}) {
 
 async function remove(id) {
     try {
-        const result = await dbConnection.result('DELETE FROM meetups WHERE id = $1', [id]);
-        return result;
+        return await dbConnection.result('DELETE FROM meetups WHERE id = $1', [id]);
     } catch(error) {
         throw error;
     }

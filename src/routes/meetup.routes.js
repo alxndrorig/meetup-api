@@ -14,7 +14,7 @@ const requestValidator = new RequestValidator();
 export const meetupRoutes = () => {
     const router = Router();
     
-    router.get('/meetups', getAllMeetups);
+    router.get('/meetups', requestValidator.query, getAllMeetups);
 
     router.get('/meetups/:id', getMeetupById);
 
