@@ -6,6 +6,10 @@ import {
     deleteMeetup, 
     changeMeetup 
 } from "../controllers/meetup.controller.js";
+import RequestValidator from '../middlewares/request.validator.js'
+
+const requestValidator = new RequestValidator();
+
 
 export const meetupRoutes = () => {
     const router = Router();
@@ -14,11 +18,11 @@ export const meetupRoutes = () => {
 
     router.get('/meetups/:id', getMeetupById);
 
-    router.post('/meetups', createMeetup);
+    router.post('/meetups', requestValidator.meetup, createMeetup);
 
     router.delete('/meetups/:id', deleteMeetup);
 
-    router.put('/meetups/:id', changeMeetup);
+    router.put('/meetups/:id', requestValidator.meetup, changeMeetup);
 
     return router;
 } 

@@ -18,9 +18,9 @@ async function getById(id) {
 }
 
 
-async function create({title, description, keywords, time, place}) {
+async function create({title, description, keywords, date, location}) {
     try {
-        return await dbConnection.one('INSERT INTO meetups(title, description, keywords, time, place) VALUES ($1, $2, $3, $4, $5) RETURNING *', [title, description, keywords, time, place]);
+        return await dbConnection.one('INSERT INTO meetups(title, description, keywords, date, location) VALUES ($1, $2, $3, $4, $5) RETURNING *', [title, description, keywords, date, location]);
     } catch (error) {
         throw error;
     }
@@ -38,8 +38,8 @@ async function remove(id) {
 
 async function update(id, body) {
     try {
-        return await dbConnection.result('UPDATE meetups SET title = $2, description = $3, keywords = $4, time = $5, place = $6 WHERE id = $1 RETURNING *', 
-        [id, body.title, body.description, body.keywords, body.time, body.place]);
+        return await dbConnection.result('UPDATE meetups SET title = $2, description = $3, keywords = $4, date = $5, location = $6 WHERE id = $1 RETURNING *', 
+        [id, body.title, body.description, body.keywords, body.date, body.location]);
     } catch (error) {
         throw error;
     }
