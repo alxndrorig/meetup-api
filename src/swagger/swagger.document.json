@@ -1,0 +1,302 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Meetup API",
+    "description": "REST CRUD Meetup-api"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Meetups",
+      "description": "Routes"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/meetups": {
+      "get": {
+        "tags": [
+          "Meetups"
+        ],
+        "description": "Getting all meetups",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "searching by title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "searching by description",
+            "type": "string"
+          },
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "searching by keywords",
+            "type": "array"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "search by date",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "description": "searching by location",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of page",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sorting by field",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return array of meeetups",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Meetup"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meetups"
+        ],
+        "description": "Creating a new Meetup",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Meetup from request body",
+            "schema": {
+              "$ref": "#/definitions/CreatedMeetup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Meetup is created",
+            "schema": {
+              "$ref": "#/definitions/CreatedMeetup"
+            }
+          },
+          "400": {
+            "description": "Exception with bad request",
+            "schema": {
+              "$ref": "#/definitions/HttpException"
+            }
+          }
+        }
+      }
+    },
+    "/meetups/{id}": {
+      "get": {
+        "tags": [
+          "Meetups"
+        ],
+        "description": "Getting a meetup by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "number",
+            "description": "Meetup ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned array of meeetups",
+            "schema": {
+              "$ref": "#/definitions/Meetup"
+            }
+          },
+          "404": {
+            "description": "Meetup with inputed id not found",
+            "schema": {
+              "$ref": "#/definitions/HttpException"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Meetups"
+        ],
+        "description": "Deleting meetup by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "number",
+            "description": "Meetup id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Meetup is deleted"
+          },
+          "404": {
+            "description": "Meetup with inputed ID not found",
+            "schema": {
+              "$ref": "#/definitions/HttpException"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Meetups"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Meetup from request body",
+            "schema": {
+              "$ref": "#/definitions/CreatedMeetup"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meetup is updated",
+            "schema": {
+              "$ref": "#/definitions/CreatedMeetup"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Meetup with inputed ID not found",
+            "schema": {
+              "$ref": "#/definitions/HttpException"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Meetup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "title": {
+          "type": "string",
+          "example": "Test title"
+        },
+        "description": {
+          "type": "string",
+          "example": "Test description"
+        },
+        "keywords": {
+          "type": "array",
+          "example": [
+            "keyword1",
+            "keyword2",
+            "keyword3"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "date": {
+          "type": "string",
+          "example": "2022-12-10T09:50:20.000Z"
+        },
+        "location": {
+          "type": "string",
+          "example": "online"
+        }
+      }
+    },
+    "CreatedMeetup": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Test title"
+        },
+        "description": {
+          "type": "string",
+          "example": "Test description"
+        },
+        "keywords": {
+          "type": "array",
+          "example": [
+            "keyword1",
+            "keyword2",
+            "keyword3"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "date": {
+          "type": "string",
+          "example": "2022-12-10T09:50:20.000Z"
+        },
+        "location": {
+          "type": "string",
+          "example": "online"
+        }
+      }
+    },
+    "HttpException": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "exception message"
+        }
+      }
+    }
+  },
+  "basepath": "/"
+}

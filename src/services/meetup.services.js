@@ -1,6 +1,5 @@
 import { dbConnection } from "../config/connection.js";
 import { MeetupDTO } from "../dto/meetup.dto.js"
-import { queryValidation } from "../validations/query.validation.js";
 
 async function getAll(query) {
     const filters = [];

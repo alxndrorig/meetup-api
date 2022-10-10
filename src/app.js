@@ -1,6 +1,8 @@
 import express from "express";
 import "dotenv/config"
 import bodyParser from "body-parser";
+import swaggerUI from "swagger-ui-express";
+import swaggerDocument  from "./swagger/swagger.document.json" assert { type: 'json' };
 
 class App {
     constructor(routes) {
@@ -8,10 +10,12 @@ class App {
         this.port = process.env.PORT || 3000;
         this.initMiddlewares();
         this.initRoutes(routes);
+        this.specs
     }
 
     initMiddlewares() {
         this.app.use(bodyParser.json());
+        this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
     }
 
     initRoutes(routes) {
