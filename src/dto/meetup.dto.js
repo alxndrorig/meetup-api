@@ -5,6 +5,6 @@ export class MeetupDTO{
         this.description = obj.description;
         this.keywords = obj.keywords;
         this.date = obj.date;
-        this.location = this.location;
+        this.location = obj.location;
     }
 }
