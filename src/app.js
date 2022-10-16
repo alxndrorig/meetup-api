@@ -3,6 +3,8 @@ import "dotenv/config"
 import bodyParser from "body-parser";
 import swaggerUI from "swagger-ui-express";
 import swaggerDocument  from "./swagger/swagger.document.json" assert { type: 'json' };
+import passport from "passport";
+import "./config/passport.js"
 
 class App {
     constructor(routes) {
@@ -10,12 +12,12 @@ class App {
         this.port = process.env.PORT || 3000;
         this.initMiddlewares();
         this.initRoutes(routes);
-        this.specs
     }
 
     initMiddlewares() {
         this.app.use(bodyParser.json());
         this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+        this.app.use(passport.initialize())
     }
 
     initRoutes(routes) {
