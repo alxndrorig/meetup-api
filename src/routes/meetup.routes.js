@@ -7,16 +7,25 @@ import {
     changeMeetup 
 } from "../controllers/meetup.controller.js";
 import RequestValidator from '../middlewares/request.validator.js'
+import CheckingRole, { checkingRole } from "../middlewares/rolecheck.validator.js"
+import { expressjwt } from "express-jwt"
 
 const requestValidator = new RequestValidator();
 
 
 export const meetupRoutes = () => {
     const router = Router();
+    const rolecheck = new CheckingRole();
+    const jwt = expressjwt({
+        secret: process.env.SECRET_KEY,
+        algorithms: ['HS256']
+    })
     
     router.get(
-        '/meetups', 
-        requestValidator.query, 
+        '/meetups',
+        jwt,
+        rolecheck.isUser,
+        requestValidator.query,
         getAllMeetups,
          /*
         #swagger.tags = ['Meetups']
@@ -64,6 +73,8 @@ export const meetupRoutes = () => {
 
     router.get(
         '/meetups/:id', 
+        jwt,
+        rolecheck.isUser,
         getMeetupById
         /*
         #swagger.tags = ['Meetups']
@@ -85,7 +96,9 @@ export const meetupRoutes = () => {
 
     router.post(
         '/meetups', 
-        requestValidator.meetup, 
+        jwt,
+        rolecheck.isAdmin,
+        requestValidator.meetup,
         createMeetup
         /*
         #swagger.tags = ['Meetups']
@@ -107,7 +120,9 @@ export const meetupRoutes = () => {
 
     router.delete(
         '/meetups/:id',
-         deleteMeetup
+        jwt,
+        rolecheck.isAdmin,
+        deleteMeetup
          /*
          #swagger.tags = ['Meetups']
          #swagger.description = 'Deleting meetup by ID'
@@ -127,6 +142,8 @@ export const meetupRoutes = () => {
 
     router.put(
         '/meetups/:id', 
+        jwt,
+        rolecheck.isAdmin,
         requestValidator.meetup, 
         changeMeetup
         /*
