@@ -1,33 +1,32 @@
-import { Router } from "express";
-import { 
-    getAllMeetups, 
-    getMeetupById, 
-    createMeetup, 
-    deleteMeetup, 
-    changeMeetup 
-} from "../controllers/meetup.controller.js";
-import RequestValidator from '../middlewares/request.validator.js'
-import CheckingRole, { checkingRole } from "../middlewares/rolecheck.validator.js"
-import { expressjwt } from "express-jwt"
+import { Router } from 'express';
+import {
+  getAllMeetups,
+  getMeetupById,
+  createMeetup,
+  deleteMeetup,
+  changeMeetup,
+} from '../controllers/meetup.controller.js';
+import RequestValidator from '../middlewares/request.validator.js';
+import CheckingRole from '../middlewares/rolecheck.validator.js';
+import { expressjwt } from 'express-jwt';
 
 const requestValidator = new RequestValidator();
 
-
 export const meetupRoutes = () => {
-    const router = Router();
-    const rolecheck = new CheckingRole();
-    const jwt = expressjwt({
-        secret: process.env.SECRET_KEY,
-        algorithms: ['HS256']
-    })
-    
-    router.get(
-        '/meetups',
-        jwt,
-        rolecheck.isUser,
-        requestValidator.query,
-        getAllMeetups,
-         /*
+  const router = Router();
+  const rolecheck = new CheckingRole();
+  const jwt = expressjwt({
+    secret: process.env.SECRET_KEY,
+    algorithms: ['HS256'],
+  });
+
+  router.get(
+    '/meetups',
+    jwt,
+    rolecheck.isUser,
+    requestValidator.query,
+    getAllMeetups
+    /*
         #swagger.tags = ['Meetups']
         #swagger.description = 'Getting all meetups'
         #swagger.parameters['title'] = {
@@ -69,14 +68,15 @@ export const meetupRoutes = () => {
             description: 'return array of meeetups',
             schema: [{$ref: '#/definitions/Meetup'}]
         }
-        */);
+        */
+  );
 
-    router.get(
-        '/meetups/:id', 
-        jwt,
-        rolecheck.isUser,
-        getMeetupById
-        /*
+  router.get(
+    '/meetups/:id',
+    jwt,
+    rolecheck.isUser,
+    getMeetupById
+    /*
         #swagger.tags = ['Meetups']
         #swagger.description = 'Getting a meetup by ID'
         #swagger.parameters['id'] = {
@@ -92,15 +92,16 @@ export const meetupRoutes = () => {
             description: 'Meetup with inputed id not found',
             schema: {$ref: '#/definitions/HttpException'}
         }
-        */);
+        */
+  );
 
-    router.post(
-        '/meetups', 
-        jwt,
-        rolecheck.isAdmin,
-        requestValidator.meetup,
-        createMeetup
-        /*
+  router.post(
+    '/meetups',
+    jwt,
+    rolecheck.isAdmin,
+    requestValidator.meetup,
+    createMeetup
+    /*
         #swagger.tags = ['Meetups']
         #swagger.description = 'Creating a new Meetup'
         #swagger.parameters['obj'] = {
@@ -116,14 +117,15 @@ export const meetupRoutes = () => {
             description: 'Exception with bad request',
             schema: { $ref: '#/definitions/HttpException' }
         }
-        */);
+        */
+  );
 
-    router.delete(
-        '/meetups/:id',
-        jwt,
-        rolecheck.isAdmin,
-        deleteMeetup
-         /*
+  router.delete(
+    '/meetups/:id',
+    jwt,
+    rolecheck.isAdmin,
+    deleteMeetup
+    /*
          #swagger.tags = ['Meetups']
          #swagger.description = 'Deleting meetup by ID'
          #swagger.parameters['id'] = {
@@ -138,15 +140,16 @@ export const meetupRoutes = () => {
             description: 'Meetup with inputed ID not found',
             schema: { $ref: '#/definitions/HttpException' }
         }
-         */);
+         */
+  );
 
-    router.put(
-        '/meetups/:id', 
-        jwt,
-        rolecheck.isAdmin,
-        requestValidator.meetup, 
-        changeMeetup
-        /*
+  router.put(
+    '/meetups/:id',
+    jwt,
+    rolecheck.isAdmin,
+    requestValidator.meetup,
+    changeMeetup
+    /*
         #swagger.tags = ['Meetups']
         #swagger.tags = 'Updating meetup by ID'
         #swagger.parameters['obj'] = {
@@ -162,7 +165,8 @@ export const meetupRoutes = () => {
             description: 'Meetup with inputed ID not found',
             schema: { $ref: '#/definitions/HttpException' }
         }
-        */);
+        */
+  );
 
-    return router;
-} 
+  return router;
+};

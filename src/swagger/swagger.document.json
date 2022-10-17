@@ -13,21 +13,13 @@
       "description": "Routes"
     }
   ],
-  "schemes": [
-    "http"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/meetups": {
       "get": {
-        "tags": [
-          "Meetups"
-        ],
+        "tags": ["Meetups"],
         "description": "Getting all meetups",
         "parameters": [
           {
@@ -92,9 +84,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Meetups"
-        ],
+        "tags": ["Meetups"],
         "description": "Creating a new Meetup",
         "parameters": [
           {
@@ -124,9 +114,7 @@
     },
     "/meetups/{id}": {
       "get": {
-        "tags": [
-          "Meetups"
-        ],
+        "tags": ["Meetups"],
         "description": "Getting a meetup by ID",
         "parameters": [
           {
@@ -153,9 +141,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Meetups"
-        ],
+        "tags": ["Meetups"],
         "description": "Deleting meetup by ID",
         "parameters": [
           {
@@ -179,9 +165,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Meetups"
-        ],
+        "tags": ["Meetups"],
         "description": "",
         "parameters": [
           {
@@ -237,11 +221,7 @@
         },
         "keywords": {
           "type": "array",
-          "example": [
-            "keyword1",
-            "keyword2",
-            "keyword3"
-          ],
+          "example": ["keyword1", "keyword2", "keyword3"],
           "items": {
             "type": "string"
           }
@@ -269,11 +249,7 @@
         },
         "keywords": {
           "type": "array",
-          "example": [
-            "keyword1",
-            "keyword2",
-            "keyword3"
-          ],
+          "example": ["keyword1", "keyword2", "keyword3"],
           "items": {
             "type": "string"
           }

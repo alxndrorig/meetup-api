@@ -1,24 +1,24 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
-    registration,
-    login,
-    getAccessToken,
-    loggingOut
-} from "../controllers/authentification.controller.js";
-import AuthValidator from "../middlewares/auth.validator.js";
+  registration,
+  login,
+  getAccessToken,
+  loggingOut,
+} from '../controllers/authentification.controller.js';
+import AuthValidator from '../middlewares/auth.validator.js';
 
 const authValidator = new AuthValidator();
 
 export const authentificationRouter = () => {
-    const router = new Router();
+  const router = new Router();
 
-    router.post("/login", authValidator.authentification, login);
+  router.post('/login', authValidator.authentification, login);
 
-    router.post("/register", authValidator.user, registration);
+  router.post('/register', authValidator.user, registration);
 
-    router.post("/", authValidator.refreshToken, getAccessToken);
+  router.post('/', getAccessToken);
 
-    router.delete("/", authValidator.refreshToken, loggingOut);
+  router.delete('/', loggingOut);
 
-    return router;
+  return router;
 };
