@@ -1,14 +1,14 @@
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 
 class User {
-    constructor(obj) {
-        this.id = obj.id;
-        this.name = obj.name;
-        this.email = obj.email;
-        this.salt = obj.salt ?? bcrypt.genSaltSync(10);
-        this.hash = obj.hash ?? bcrypt.hashSync(obj?.password, this.salt);
-        this.role = obj.role ?? 'user';
-    }
+  constructor({ id, name, email, salt, hash, role }) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.salt = salt ?? bcrypt.genSaltSync(10);
+    this.hash = hash ?? bcrypt.hashSync(obj?.password, this.salt);
+    this.role = role ?? 'user';
+  }
 }
 
 export default User;

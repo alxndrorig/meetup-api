@@ -1,10 +1,10 @@
-export class MeetupDTO{
-    constructor(obj) {
-        this.id = obj.id;
-        this.title = obj.title;
-        this.description = obj.description;
-        this.keywords = obj.keywords;
-        this.date = obj.date;
-        this.location = obj.location;
-    }
+export class MeetupDTO {
+  constructor({ id, title, description, keywords, date, location }) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.keywords = keywords;
+    this.date = date;
+    this.location = location;
+  }
 }

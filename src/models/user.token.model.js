@@ -1,9 +1,9 @@
 class UserToken {
-    constructor(obj) {
-        this.userId = obj.userId;
-        this.token = obj.token;
-        this.createdAt = obj.createdAt;
-    }
+  constructor({ userId, token, createdAt }) {
+    this.userId = userId;
+    this.token = token;
+    this.createdAt = createdAt;
+  }
 }
 
 export default UserToken;
